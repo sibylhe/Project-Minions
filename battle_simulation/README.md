@@ -2,25 +2,28 @@
 
 This module implements player-vs-player battle simulations. Here's a simpe demo.    
 
-Demo: *battle_simulation_demo.ipynb*
+Demo: *battle_simulation_demo.ipynb*    
 Input data sample: */data*    
     
 
 ## Game Mechanism    
-------
 A minion has **7 STATS**, which determine **4 SUBSTATS** and **3 ATTRIBUTES**.    
-For detailed information, please refer to Lexicon & Definition.    
+For detailed information, please refer to [Lexicon & Definition](https://docs.google.com/spreadsheets/d/1jVHqOqal8XrJ4DyJq0RVo7MfiukkxO8pQR-aIXHciPc/edit?ts=5cf70268#gid=2006756308).    
 
-<img src="/Users/sibylhe/Documents/Minions/battle-simulation/img/minion_relationship_keys.jpg" style="zoom: 50%;" />
+![](https://github.com/sibylhe/Project-Minions/blob/master/battle_simulation/img/minion_relationship_keys.jpg)
+
+
 
 ### Data Input and Preprocessing    
+
 ------
+
 The simulator takes two inputs in json:    
 - minion_data
 - skill_data
   
 
-<img src="/Users/sibylhe/Documents/Minions/battle-simulation/img/minion_relationship_keys_variable.jpg" style="zoom: 50%;" />
+![alt text](https://github.com/sibylhe/Project-Minions/blob/master/battle_simulation/img/minion_relationship_keys_variable.jpg)
 
 To create a **minion** instance, specify:    
 id: unique id of the minion, `int`    
@@ -45,9 +48,11 @@ minion `dict`
 
 Modifies the minion `dict` by computing `base_substats`, `cur_substats`, `cur_attributes`, and `cp`. This function is wrapped into `load_minion_data()`.       
 
-**Current CP (combat power) formula**
-$cp = strength \times \sqrt{endurance} \times \sqrt{constitution}$    
-    
+**Current CP (combat power) formula**        
+
+![equation](https://latex.codecogs.com/gif.latex?%24cp%20%3D%20strength%20%5Ctimes%20%5Csqrt%7Bendurance%7D%20%5Ctimes%20%5Csqrt%7Bconstitution%7D%24)     
+
+
 
 #### `load_minion_data()` Function     
 **Args**:    
@@ -72,10 +77,10 @@ skill_data `dict`
 Initiated from skill_data `dict`.     
 
 For fast moves, calculate **dps** (damage per second).    
-$dps = \dfrac{power}{cd+cast}$    
+![equation](https://latex.codecogs.com/gif.latex?dps%3D%5Cfrac%7Bpower%7D%7Bcd&plus;cast%7D)    
 
 For super moves, calculate **dpm** (damage per meter point).    
-$dpm = \dfrac{power}{(cd + cast)\times|mpdelta|}$    
+![equation](https://latex.codecogs.com/gif.latex?dpm%3D%5Cfrac%7Bpower%7D%7B%28cd&plus;cast%29%5Ctimes%7Cmpdelta%7C%7D)    
     
 
 #### `BattleMinion` Class     
@@ -156,10 +161,10 @@ dfdr_mpdelta: how many mp the defender gains
 
 **Current damage formula**
 
-$damage = \dfrac{atkr.attack}{dfdr.defense} \times \textit{critical multiplier} \times move.power \times \textit{hit multiplier}$     
+![equation](https://latex.codecogs.com/gif.latex?damage%20%3D%20%5Cdfrac%7Batkr.attack%7D%7Bdfdr.defense%7D%20%5Ctimes%20%5Ctextit%7Bcritical%20multiplier%7D%20%5Ctimes%20move.power%20%5Ctimes%20%5Ctextit%7Bhit%20multiplier%7D)     
 
-$\textit{critical multiplier}$: $2$ if this is a critical hit, $1$ if it is not (determined by dexterity)    
-$\textit{hit multiplier}$: $1$ if the attacking minion successfully hits the defending minion, $0$ if it misses (determined by obedience)    
+critical multiplier: 2 if this is a critical hit, 1 if it is not (determined by dexterity)    
+hit multiplier: 1 if the attacking minion successfully hits the defending minion, 0​ if it misses (determined by obedience)    
     
     
 
